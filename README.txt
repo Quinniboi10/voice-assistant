@@ -11,10 +11,7 @@ python3 main.py
 Mac OS:
 
 git clone https://github.com/Quinniboi10/voice-assistant.git
-sudo apt-get install python3
-cd voice-assistant
-sudo pip3 install -r requirements.txt
-python3 main.py
+comming soon...
 
 Windows OS:
 
