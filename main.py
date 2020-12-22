@@ -2,7 +2,7 @@ import JarvisAI
 import re
 import pprint
 import random
-import subprocess
+import os
 
 obj = JarvisAI.JarvisAssistant()
 
@@ -11,10 +11,11 @@ def t2s(text):
     obj.text2speech(text)
 
 
-while True:    
+while True:
     res = obj.mic_input()
+    
     if re.search('hey jarvis', res):
-        
+
         if re.search('weather|temperature', res):
             city = res.split(' ')[-1]
             weather_res = obj.weather(city=city)
@@ -52,7 +53,7 @@ while True:
         if re.search('launch', res):
             dict_app = {
                 'chrome': 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
-                'minecraft java': 'C:\Program Files (x86)\Minecraft Launcher\Minecraft Launcher.exe'
+                'epic games': 'C:\Program Files (x86)\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe'
             }
     
             app = res.split(' ', 1)[1]
@@ -69,7 +70,7 @@ while True:
             t2s('Hi')
     
         if re.search('how are you', res):
-            li = ['good', 'fine', 'great']
+            li = ['good', 'good', 'good', 'great', 'great']
             response = random.choice(li)
             print(f"I am {response}")
             t2s(f"I am {response}")
@@ -89,12 +90,16 @@ while True:
                 "news": "Example: 'news for today' ",
             }
             ans = """I can do lots of things, for example you can ask me time, date, weather in your city,
-            I can open websites for you, launch application and more. See the list of commands-"""
+            I can open websites for you, launch applications and more. See the list of commands-"""
             print(ans)
             pprint.pprint(li_commands)
             t2s(ans)
         if re.search('shut down', res):
-            t2s("Are you sure you want to shut down your computer?")
-            if input("(y/n)") == 'y':            
-                t2s("Ok , your pc will shut down in 10 sec make sure you exit from all applications")
-                subprocess.call(["shutdown", "/P"])
+            
+            t2s("Do you wish to shutdown your computer? (yes / no): ")
+            shutdown = input("Do you wish to shutdown your computer? (yes / no): ") 
+  
+            if shutdown == 'yes' or 'y': 
+                os.system("shutdown /s /t 10")  
+            else:
+                t2s("Canceling")
